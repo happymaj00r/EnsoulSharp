@@ -1,25 +1,25 @@
 ﻿
+using EnsoulSharp;
+using EnsoulSharp.SDK;
+using Script_Maker.Champions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Script_Maker
 {
-    using Easy_Mid.Champions;
-    using EnsoulSharp;
-    using EnsoulSharp.SDK;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    public static class Program
+    
+     class Program
     {
-        public static void Main()
+        static void Main(string[] args)
         {
-            GameEvent.OnGameLoad += OnGameLoad;
+            GameEvent.OnGameLoad += On_LoadGame;
         }
-        private static void OnGameLoad()
+        private static void On_LoadGame()
         {
-            
-            
+
             if (ObjectManager.Player.CharacterName == ObjectManager.Player.CharacterName)
             {
                 ScriptMaker.OnLoad();

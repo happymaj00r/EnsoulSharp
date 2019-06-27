@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Easy_Mid.Champions
+namespace Script_Maker.Champions
 {
     class ScriptMaker
     {
