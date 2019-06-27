@@ -12,6 +12,10 @@ namespace Script_Maker
     using System.Threading.Tasks;
     public static class Program
     {
+        //Credits:
+        //- Github Name: 011110001
+        //- Discord Name: Putão Com Tesão
+        //- used ur Easy_Mid script as template so i dont have to write everything from scratch thx <3
         public static void Main()
         {
             GameEvent.OnGameLoad += OnGameLoad;
