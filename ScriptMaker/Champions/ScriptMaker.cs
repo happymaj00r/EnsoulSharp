@@ -1,4 +1,4 @@
-﻿using EnsoulSharp;
+﻿ using EnsoulSharp;
 using EnsoulSharp.SDK;
 using EnsoulSharp.SDK.MenuUI;
 using EnsoulSharp.SDK.MenuUI.Values;
@@ -391,7 +391,7 @@ namespace Script_Maker.Champions
 
             if (comboQ && q.IsReady() && qtarget.IsValidTarget(q.Range))
             {
-                switch (qmodus)
+                switch (qmodus.Index)
                 {
                     case 0:
                         q.SPredictionCast(qtarget, hitQ);
@@ -406,7 +406,7 @@ namespace Script_Maker.Champions
             }
             if (comboW && w.IsReady() && wtarget.IsValidTarget(w.Range))
             {
-                switch (wmodus)
+                switch (wmodus.Index)
                 {
                     case 0:
                         w.SPredictionCast(wtarget, hitW);
@@ -421,7 +421,7 @@ namespace Script_Maker.Champions
             }
             if (comboE && e.IsReady() && etarget.IsValidTarget(e.Range))
             {
-                switch (qmodus)
+                switch (emodus.Index)
                 {
                     case 0:
                         e.SPredictionCast(etarget, hitE);
@@ -436,7 +436,7 @@ namespace Script_Maker.Champions
             }
             if (comboR && r.IsReady() && rtarget.IsValidTarget(r.Range))
             {
-                switch (qmodus)
+                switch (rmodus.Index)
                 {
                     case 0:
                         r.SPredictionCast(rtarget, hitR);
