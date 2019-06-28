@@ -206,14 +206,14 @@ namespace Script_Maker.Champions
             ColMenu.Add(ColR);
 
 
-            var antiGP = new Menu("antiGP", " Anti gapcloser");
-            antiGP.Add(AntiGapq);
-            antiGP.Add(AntiGapw);
-            antiGP.Add(AntiGape);
-            antiGP.Add(AntiGapr);
+            var antiGP2 = new Menu("antiGP2", "Anti gapcloser");
+            antiGP2.Add(AntiGapq);
+            antiGP2.Add(AntiGapw);
+            antiGP2.Add(AntiGape);
+            antiGP2.Add(AntiGapr);
 
 
-            var clearwave = new Menu("waveclear", "waveckear Settings");
+            var clearwave = new Menu("waveclear", "waveclear Settings");
             clearwave.Add(laneQ);
             clearwave.Add(laneE);
             clearwave.Add(laneW);
