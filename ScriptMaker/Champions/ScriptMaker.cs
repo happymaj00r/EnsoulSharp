@@ -14,10 +14,16 @@ using System.Threading.Tasks;
 
 namespace Script_Maker.Champions
 {
+    
     class ScriptMaker
     {
         public static Menu _Menu = null;
-        
+
+        public static int MenubufferQ = 0;
+        public static int MenubufferW = 0;
+        public static int MenubufferE = 0;
+        public static int MenubufferR = 0;
+
         private static Spell q, w, e, r;
         private static SpellSlot ignite;
         private static AIHeroClient _player { get { return ObjectManager.Player; } }
@@ -47,7 +53,11 @@ namespace Script_Maker.Champions
         public static readonly MenuBool laneW = new MenuBool("laneW", "Use W on Clear Wave");
         public static readonly MenuBool laneE = new MenuBool("laneE", "Use E on Clear Wave");
         public static readonly MenuBool laneR = new MenuBool("laneR", "Use R on Clear Wave");
-
+        //Collision Manager
+        public static readonly MenuBool ColQ = new MenuBool("ColQ", "Q spell has Collision?");
+        public static readonly MenuBool ColW = new MenuBool("ColW", "W spell has Collision?");
+        public static readonly MenuBool ColE = new MenuBool("ColE", "E spell has Collision?");
+        public static readonly MenuBool ColR = new MenuBool("ColR", "R spell has Collision?");
 
         //MISC
         public static readonly MenuBool useKS = new MenuBool("useKS", "Enable KS?");
@@ -76,7 +86,7 @@ namespace Script_Maker.Champions
             OnChange();
             
             ignite = _player.GetSpellSlot("summonerdot");
-
+            
             MenuCreate();
             Game.OnUpdate += Game_OnGameUpdate;
             Drawing.OnDraw += OnDraw;
@@ -92,10 +102,16 @@ namespace Script_Maker.Champions
             switch (qmodus.Index)
             {
                 case 0:
-                    q.SetSkillshot(0.25f,100, 1800, true, SkillshotType.Line);
+                    if(ColQ == true)
+                    {
+                        q.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    }
+                    else
+                    q.SetSkillshot(0.25f,100, 1800, false, SkillshotType.Line);
                     break;
                 case 1:
-                    q.SetTargetted(0.25f, 3000);
+
+                    q.SetTargetted(0.25f, float.MaxValue);
                     break;
                 default:
                      q.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
@@ -105,10 +121,15 @@ namespace Script_Maker.Champions
             switch (wmodus.Index)
             {
                 case 0:
-                    w.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    if (ColQ == true)
+                    {
+                        w.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    }
+                    else
+                        w.SetSkillshot(0.25f, 100, 1800, false, SkillshotType.Line);
                     break;
                 case 1:
-                    w.SetTargetted(0.25f, 3000);
+                    w.SetTargetted(0.25f, float.MaxValue);
                     break;
                 default:
                     w.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
@@ -118,10 +139,15 @@ namespace Script_Maker.Champions
             switch (emodus.Index)
             {
                 case 0:
-                    e.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    if (ColQ == true)
+                    {
+                        e.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    }
+                    else
+                        e.SetSkillshot(0.25f, 100, 1800, false, SkillshotType.Line);
                     break;
                 case 1:
-                    e.SetTargetted(0.25f, 3000);
+                    e.SetTargetted(0.25f, float.MaxValue);
                     break;
                 default:
                     e.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
@@ -131,7 +157,12 @@ namespace Script_Maker.Champions
             switch (rmodus.Index)
             {
                 case 0:
-                    r.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    if (ColQ == true)
+                    {
+                        r.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    }
+                    else
+                        r.SetSkillshot(0.25f, 100, 1800, false, SkillshotType.Line);
                     break;
                 case 1:
                     r.SetTargetted(0.25f, float.MaxValue);
@@ -142,7 +173,8 @@ namespace Script_Maker.Champions
                     break;
 
             }
-            
+           
+
         }
         private static void MenuCreate()
         {
@@ -166,7 +198,13 @@ namespace Script_Maker.Champions
             combat.Add(wmodus);
             combat.Add(emodus);
             combat.Add(rmodus);
-            combat.Add(saveall);
+
+            var ColMenu = new Menu("ColMenu", "Collision Menu");
+            ColMenu.Add(ColQ);
+            ColMenu.Add(ColW);
+            ColMenu.Add(ColE);
+            ColMenu.Add(ColR);
+
 
             var antiGP = new Menu("antiGP", " Anti gapcloser");
             antiGP.Add(AntiGapq);
@@ -212,9 +250,17 @@ namespace Script_Maker.Champions
         {
             if (_player.IsDead)
                 return;
-            if (comboQRange.Interacting || comboERange.Interacting || comboRRange.Interacting || comboWRange.Interacting)
-            {               
+            if (comboQRange.Interacting || comboERange.Interacting || comboRRange.Interacting || comboWRange.Interacting || MenubufferQ != qmodus.Index || MenubufferW != wmodus.Index || MenubufferE != emodus.Index || MenubufferR != rmodus.Index)
+            {
+
+                MenubufferQ = qmodus.Index;
+                MenubufferW = wmodus.Index;
+                MenubufferE = emodus.Index;
+                MenubufferR = rmodus.Index;
+                
                 OnChange();
+                
+                
             }
 
             if (useKS.Enabled)
