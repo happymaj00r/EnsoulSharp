@@ -23,6 +23,10 @@ namespace Script_Maker.Champions
         public static int MenubufferW = 0;
         public static int MenubufferE = 0;
         public static int MenubufferR = 0;
+        public static int MenubufferColQ = 0;
+        public static int MenubufferColW = 0;
+        public static int MenubufferColE = 0;
+        public static int MenubufferColR = 0;
 
         private static Spell q, w, e, r;
         private static SpellSlot ignite;
@@ -41,7 +45,7 @@ namespace Script_Maker.Champions
         public static readonly MenuList wmodus = new MenuList<string>("wmodus", "W Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
         public static readonly MenuList emodus = new MenuList<string>("emodus", "E Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
         public static readonly MenuList rmodus = new MenuList<string>("rmodus", "R Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
-        public static readonly MenuButton saveall = new MenuButton("abutton", "Apply All", "Apply");
+        
         //antigap
         public static readonly MenuBool AntiGapq = new MenuBool("AntiGapq", "Use Q on gapcloser");
         public static readonly MenuBool AntiGapw = new MenuBool("AntiGapw", "Use W on gapcloser");
@@ -83,11 +87,12 @@ namespace Script_Maker.Champions
 
         public static void OnLoad()
         {
-            OnChange();
+           
             
             ignite = _player.GetSpellSlot("summonerdot");
             
             MenuCreate();
+            OnChange();
             Game.OnUpdate += Game_OnGameUpdate;
             Drawing.OnDraw += OnDraw;
         }
@@ -236,10 +241,12 @@ namespace Script_Maker.Champions
 
             var pred = new Menu("spred", "Prediction settings");
             SPrediction.Prediction.Initialize(pred);
-
+            
             _menu.Add(hitconfig);
-            _menu.Add(combat);          
+            _menu.Add(combat);
+            _menu.Add(antiGP2);
             _menu.Add(clearwave);
+            _menu.Add(ColMenu);
             _menu.Add(misc);
             _menu.Add(draw);
             _menu.Add(pred);
@@ -250,9 +257,10 @@ namespace Script_Maker.Champions
         {
             if (_player.IsDead)
                 return;
-            if (comboQRange.Interacting || comboERange.Interacting || comboRRange.Interacting || comboWRange.Interacting || MenubufferQ != qmodus.Index || MenubufferW != wmodus.Index || MenubufferE != emodus.Index || MenubufferR != rmodus.Index)
+            if (comboQRange.Interacting || comboERange.Interacting || comboRRange.Interacting || comboWRange.Interacting || MenubufferQ != qmodus.Index || MenubufferW != wmodus.Index || MenubufferE != emodus.Index || MenubufferR != rmodus.Index
+                         )
             {
-
+                
                 MenubufferQ = qmodus.Index;
                 MenubufferW = wmodus.Index;
                 MenubufferE = emodus.Index;
