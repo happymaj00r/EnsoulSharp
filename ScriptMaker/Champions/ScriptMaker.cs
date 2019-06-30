@@ -665,7 +665,7 @@ namespace Script_Maker.Champions
             var Wmob = GameObjects.Jungle.Where(x => x.IsValidTarget(w.Range) && x.GetJungleType() != JungleType.Unknown).OrderByDescending(x => x.MaxHealth).FirstOrDefault();
             var Emob = GameObjects.Jungle.Where(x => x.IsValidTarget(e.Range) && x.GetJungleType() != JungleType.Unknown).OrderByDescending(x => x.MaxHealth).FirstOrDefault();
 
-            if (!Qmob.IsValid() || !Wmob.IsValid() || Emob.IsValid())
+            if (!Qmob.IsValid())
                 return;
 
             if (Qmob.IsValidTarget(q.Range) && JungleQ && q.IsReady())
