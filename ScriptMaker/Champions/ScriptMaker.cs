@@ -69,7 +69,10 @@ namespace Script_Maker.Champions
         public static readonly MenuBool wKS = new MenuBool("wKS", "KS with W");
         public static readonly MenuBool eKS = new MenuBool("eKS", "KS with E");
         public static readonly MenuBool rKS = new MenuBool("rKS", "KS with R");
-
+        //jungle clear
+        public static readonly MenuBool JungleQ = new MenuBool("JungleQ", "Use Q ");
+        public static readonly MenuBool JungleW = new MenuBool("JungleW", "Use W ");
+        public static readonly MenuBool JungleE = new MenuBool("JungleE", "Use E ");
         //Harrass
         public static readonly MenuBool HarassQ = new MenuBool("HarassQ", "Use Q ");
         public static readonly MenuBool HarassW = new MenuBool("HarassW", "Use W ");
@@ -129,7 +132,7 @@ namespace Script_Maker.Champions
             switch (wmodus.Index)
             {
                 case 0:
-                    if (ColQ == true)
+                    if (ColW == true)
                     {
                         w.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
                     }
@@ -147,7 +150,7 @@ namespace Script_Maker.Champions
             switch (emodus.Index)
             {
                 case 0:
-                    if (ColQ == true)
+                    if (ColE == true)
                     {
                         e.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
                     }
@@ -165,7 +168,7 @@ namespace Script_Maker.Champions
             switch (rmodus.Index)
             {
                 case 0:
-                    if (ColQ == true)
+                    if (ColR == true)
                     {
                         r.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
                     }
@@ -231,7 +234,11 @@ namespace Script_Maker.Champions
             clearwave.Add(laneQ);
             clearwave.Add(laneE);
             clearwave.Add(laneW);
-            
+
+            var JungleMenu = new Menu("JungleMenue", "Jungle clear");
+            JungleMenu.Add(JungleQ);
+            JungleMenu.Add(JungleW);
+            JungleMenu.Add(JungleE);
 
 
             var misc = new Menu("ks", "Ks Settings");
@@ -256,6 +263,7 @@ namespace Script_Maker.Champions
             _menu.Add(HarrasMenu);
             _menu.Add(antiGP2);
             _menu.Add(clearwave);
+            _menu.Add(JungleMenu);
             _menu.Add(ColMenu);
             _menu.Add(misc);
             _menu.Add(draw);
@@ -294,7 +302,9 @@ namespace Script_Maker.Champions
                     break;
                 case OrbwalkerMode.LaneClear:
                     DoLaneClear();
+                    DoJungleClear();
                     break;
+                    
             }
         }
 
@@ -596,7 +606,7 @@ namespace Script_Maker.Champions
             var Wfarm = wminions.FirstOrDefault();
             var Efarm = eminions.FirstOrDefault();
 
-            if (qminions.Any() && laneQ)
+            if (qminions.Any() && laneQ && q.IsReady())
             {
                 
                 switch (qmodus.Index)
@@ -614,7 +624,7 @@ namespace Script_Maker.Champions
 
             }
 
-            if (wminions.Any() && laneW)
+            if (wminions.Any() && laneW && w.IsReady())
             {
 
                 switch (wmodus.Index)
@@ -631,7 +641,7 @@ namespace Script_Maker.Champions
                 }
             }
 
-            if (eminions.Any() && laneE)
+            if (eminions.Any() && laneE&&  e.IsReady())
             {
 
                 switch (emodus.Index)
@@ -641,6 +651,68 @@ namespace Script_Maker.Champions
                         break;
                     case 1:
                         e.Cast(Efarm.Position);
+                        break;
+                    case 2:
+                        e.Cast();
+                        break;
+                }
+            }
+        }
+
+        private static void DoJungleClear()
+        {
+            var Qmob = GameObjects.Jungle.Where(x => x.IsValidTarget(q.Range) && x.GetJungleType() != JungleType.Unknown).OrderByDescending(x => x.MaxHealth).FirstOrDefault();
+            var Wmob = GameObjects.Jungle.Where(x => x.IsValidTarget(w.Range) && x.GetJungleType() != JungleType.Unknown).OrderByDescending(x => x.MaxHealth).FirstOrDefault();
+            var Emob = GameObjects.Jungle.Where(x => x.IsValidTarget(e.Range) && x.GetJungleType() != JungleType.Unknown).OrderByDescending(x => x.MaxHealth).FirstOrDefault();
+
+            if (!Qmob.IsValid() || !Wmob.IsValid() || Emob.IsValid())
+                return;
+
+            if (Qmob.IsValidTarget(q.Range) && JungleQ && q.IsReady())
+            {
+
+                switch (qmodus.Index)
+                {
+                    case 0:
+                        q.Cast(Qmob.Position);
+                        break;
+                    case 1:
+                        q.Cast(Qmob);
+                        break;
+                    case 2:
+                        q.Cast();
+                        break;
+                }
+
+            }
+
+            if (Wmob.IsValidTarget(w.Range) && JungleW && w.IsReady())
+            {
+
+                switch (wmodus.Index)
+                {
+                    case 0:
+                        w.Cast(Wmob.Position);
+                        break;
+                    case 1:
+                        w.Cast(Wmob);
+                        break;
+                    case 2:
+                        w.Cast();
+                        break;
+                }
+            }
+
+            if (Emob.IsValidTarget(e.Range) && JungleE && e.IsReady())
+            {
+
+                switch (emodus.Index)
+                {
+                    case 0:
+                        e.Cast(Emob.Position);
+                        break;
+                    case 1:
+                        e.Cast(Emob);
                         break;
                     case 2:
                         e.Cast();
