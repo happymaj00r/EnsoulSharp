@@ -52,25 +52,28 @@ namespace Script_Maker.Champions
         public static readonly MenuBool AntiGape = new MenuBool("AntiGape", "Use E on gapcloser");
         public static readonly MenuBool AntiGapr = new MenuBool("AntiGapr", "Use R on gapcloser");
 
-        //Push Wave
+        //Laneclear
         public static readonly MenuBool laneQ = new MenuBool("laneQ", "Use Q on Clear Wave");
         public static readonly MenuBool laneW = new MenuBool("laneW", "Use W on Clear Wave");
         public static readonly MenuBool laneE = new MenuBool("laneE", "Use E on Clear Wave");
-        public static readonly MenuBool laneR = new MenuBool("laneR", "Use R on Clear Wave");
+        
         //Collision Manager
         public static readonly MenuBool ColQ = new MenuBool("ColQ", "Q spell has Collision?");
         public static readonly MenuBool ColW = new MenuBool("ColW", "W spell has Collision?");
         public static readonly MenuBool ColE = new MenuBool("ColE", "E spell has Collision?");
         public static readonly MenuBool ColR = new MenuBool("ColR", "R spell has Collision?");
 
-        //MISC
+        //KS
         public static readonly MenuBool useKS = new MenuBool("useKS", "Enable KS?");
         public static readonly MenuBool qKS = new MenuBool("qKS", "KS with Q");
         public static readonly MenuBool wKS = new MenuBool("wKS", "KS with W");
         public static readonly MenuBool eKS = new MenuBool("eKS", "KS with E");
         public static readonly MenuBool rKS = new MenuBool("rKS", "KS with R");
 
-
+        //Harrass
+        public static readonly MenuBool HarassQ = new MenuBool("HarassQ", "Use Q ");
+        public static readonly MenuBool HarassW = new MenuBool("HarassW", "Use W ");
+        public static readonly MenuBool HarassE = new MenuBool("HarassE", "Use E ");
 
         //Hit Chance
         public static readonly MenuList qhit = new MenuList<string>("qhit", "Q - HitChance :", new[] { "High", "Medium", "Low" });
@@ -204,6 +207,12 @@ namespace Script_Maker.Champions
             combat.Add(emodus);
             combat.Add(rmodus);
 
+            var HarrasMenu = new Menu("HarrasMenuu", "Harras Settings");
+            HarrasMenu.Add(HarassQ);
+            HarrasMenu.Add(HarassW);
+            HarrasMenu.Add(HarassE);
+
+
             var ColMenu = new Menu("ColMenu", "Collision Menu");
             ColMenu.Add(ColQ);
             ColMenu.Add(ColW);
@@ -222,7 +231,7 @@ namespace Script_Maker.Champions
             clearwave.Add(laneQ);
             clearwave.Add(laneE);
             clearwave.Add(laneW);
-            clearwave.Add(laneR);
+            
 
 
             var misc = new Menu("ks", "Ks Settings");
@@ -244,6 +253,7 @@ namespace Script_Maker.Champions
             
             _menu.Add(hitconfig);
             _menu.Add(combat);
+            _menu.Add(HarrasMenu);
             _menu.Add(antiGP2);
             _menu.Add(clearwave);
             _menu.Add(ColMenu);
@@ -278,6 +288,12 @@ namespace Script_Maker.Champions
             {
                 case OrbwalkerMode.Combo:
                     DoCombo();
+                    break;
+                case OrbwalkerMode.Harass:
+                    DoHarass();
+                    break;
+                case OrbwalkerMode.LaneClear:
+                    DoLaneClear();
                     break;
             }
         }
@@ -509,11 +525,129 @@ namespace Script_Maker.Champions
 
         }
 
+        private static void DoHarass()
+        {
+
+            var qtarget = TargetSelector.GetTarget(q.Range);
+            var wtarget = TargetSelector.GetTarget(w.Range);
+            var etarget = TargetSelector.GetTarget(e.Range);
+            
+            var hitQ = hitchanceQ();
+            var hitW = hitchanceW();
+            var hitE = hitchanceE();
             
 
-        
-    
+            if (HarassQ && q.IsReady() && qtarget.IsValidTarget(q.Range))
+            {
+                switch (qmodus.Index)
+                {
+                    case 0:
+                        q.SPredictionCast(qtarget, hitQ);
+                        break;
+                    case 1:
+                        q.Cast(qtarget);
+                        break;
+                    case 2:
+                        q.Cast();
+                        break;
+                }
+            }
+            if (HarassW && w.IsReady() && wtarget.IsValidTarget(w.Range))
+            {
+                switch (wmodus.Index)
+                {
+                    case 0:
+                        w.SPredictionCast(wtarget, hitW);
+                        break;
+                    case 1:
+                        w.Cast(wtarget);
+                        break;
+                    case 2:
+                        w.Cast();
+                        break;
+                }
+            }
+            if (HarassE && e.IsReady() && etarget.IsValidTarget(e.Range))
+            {
+                switch (emodus.Index)
+                {
+                    case 0:
+                        e.SPredictionCast(etarget, hitE);
+                        break;
+                    case 1:
+                        e.Cast(etarget);
+                        break;
+                    case 2:
+                        e.Cast();
+                        break;
+                }
+            }
+        }
 
+        private static void DoLaneClear()
+        {
+            var qminions = GameObjects.EnemyMinions.Where(x => x.IsValidTarget(q.Range) && x.IsMinion()).Cast<AIBaseClient>().ToList();
+            var wminions = GameObjects.EnemyMinions.Where(x => x.IsValidTarget(w.Range) && x.IsMinion()).Cast<AIBaseClient>().ToList();
+            var eminions = GameObjects.EnemyMinions.Where(x => x.IsValidTarget(e.Range) && x.IsMinion()).Cast<AIBaseClient>().ToList();
+            var qfarm = q.GetLineFarmLocation(qminions);
+            var wfarm = w.GetLineFarmLocation(wminions);
+            var efarm = e.GetLineFarmLocation(eminions);
+            var Qfarm = qminions.FirstOrDefault();
+            var Wfarm = wminions.FirstOrDefault();
+            var Efarm = eminions.FirstOrDefault();
+
+            if (qminions.Any() && laneQ)
+            {
+                
+                switch (qmodus.Index)
+                {
+                    case 0:
+                        q.Cast(qfarm.Position);
+                        break;
+                    case 1:
+                        q.Cast(Qfarm.Position);
+                        break;
+                    case 2:
+                        q.Cast();
+                        break;
+                }
+
+            }
+
+            if (wminions.Any() && laneW)
+            {
+
+                switch (wmodus.Index)
+                {
+                    case 0:
+                        w.Cast(wfarm.Position);
+                        break;
+                    case 1:
+                        w.Cast(Wfarm.Position);
+                        break;
+                    case 2:
+                        w.Cast();
+                        break;
+                }
+            }
+
+            if (eminions.Any() && laneE)
+            {
+
+                switch (emodus.Index)
+                {
+                    case 0:
+                        e.Cast(efarm.Position);
+                        break;
+                    case 1:
+                        e.Cast(Efarm.Position);
+                        break;
+                    case 2:
+                        e.Cast();
+                        break;
+                }
+            }
+        }
         private static void KS()
         {
             var qtarget = TargetSelector.GetTarget(q.Range);
