@@ -323,7 +323,7 @@ namespace Script_Maker.Champions
             try
             {
 
-                if (w.IsReady() && sender.IsValidTarget(w.Range) && AntiGapq)
+                if (q.IsReady() && sender.IsValidTarget(q.Range) && AntiGapq)
                 {
                     if(qmodus.Index <= 1)
                     {
