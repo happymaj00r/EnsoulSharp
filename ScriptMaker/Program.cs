@@ -19,12 +19,10 @@ namespace Script_Maker
         }
         private static void On_LoadGame()
         {
-
-            if (ObjectManager.Player.CharacterName == ObjectManager.Player.CharacterName)
-            {
+           
                 ScriptMaker.OnLoad();
                 Chat.PrintChat("Welcome to Script Maker :)");
-            }
+            
         }
     }
 }

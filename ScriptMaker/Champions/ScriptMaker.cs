@@ -41,10 +41,10 @@ namespace Script_Maker.Champions
         public static readonly MenuSlider comboWRange = new MenuSlider("wrange", "Pick the W Range", 1000, 1, 3000);
         public static readonly MenuSlider comboERange = new MenuSlider("erange", "Pick the E Range", 2000, 1, 3000);
         public static readonly MenuSlider comboRRange = new MenuSlider("rrange", "Pick the R Range", 1000, 1, 3000);
-        public static readonly MenuList qmodus = new MenuList<string>("qmodus", "Q Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
-        public static readonly MenuList wmodus = new MenuList<string>("wmodus", "W Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
-        public static readonly MenuList emodus = new MenuList<string>("emodus", "E Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
-        public static readonly MenuList rmodus = new MenuList<string>("rmodus", "R Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
+        public static readonly MenuList qmodus = new MenuList("qmodus", "Q Spell Logic", new[]{ "Skillshot", "Targetted", "Self Cast/Buff" });
+        public static readonly MenuList wmodus = new MenuList("wmodus", "W Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
+        public static readonly MenuList emodus = new MenuList("emodus", "E Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
+        public static readonly MenuList rmodus = new MenuList("rmodus", "R Spell Logic", new[] { "Skillshot", "Targetted", "Self Cast/Buff" });
         
         //antigap
         public static readonly MenuBool AntiGapq = new MenuBool("AntiGapq", "Use Q on gapcloser");
@@ -79,10 +79,10 @@ namespace Script_Maker.Champions
         public static readonly MenuBool HarassE = new MenuBool("HarassE", "Use E ");
 
         //Hit Chance
-        public static readonly MenuList qhit = new MenuList<string>("qhit", "Q - HitChance :", new[] { "High", "Medium", "Low" });
-        public static readonly MenuList whit = new MenuList<string>("whit", "W - HitChance :", new[] { "High", "Medium", "Low" });
-        public static readonly MenuList ehit = new MenuList<string>("ehit", "E - HitChance :", new[] { "High", "Medium", "Low" });
-        public static readonly MenuList rhit = new MenuList<string>("rhit", "R - HitChance :", new[] { "High", "Medium", "Low" });
+        public static readonly MenuList qhit = new MenuList("qhit", "Q - HitChance :", new[] { "High", "Medium", "Low" });
+        public static readonly MenuList whit = new MenuList("whit", "W - HitChance :", new[] { "High", "Medium", "Low" });
+        public static readonly MenuList ehit = new MenuList("ehit", "E - HitChance :", new[] { "High", "Medium", "Low" });
+        public static readonly MenuList rhit = new MenuList("rhit", "R - HitChance :", new[] { "High", "Medium", "Low" });
 
         //Draw
         public static readonly MenuBool Qd = new MenuBool("qd", "Draw Q Range");
@@ -658,7 +658,13 @@ namespace Script_Maker.Champions
                 }
             }
         }
-
+        public class LastCastedSpellEntry
+        {
+            internal LastCastedSpellEntry(AIBaseClientProcessSpellCastEventArgs args)
+            {
+                
+            }
+        }
         private static void DoJungleClear()
         {
             var Qmob = GameObjects.Jungle.Where(x => x.IsValidTarget(q.Range) && x.GetJungleType() != JungleType.Unknown).OrderByDescending(x => x.MaxHealth).FirstOrDefault();
@@ -670,7 +676,9 @@ namespace Script_Maker.Champions
 
             if (Qmob.IsValidTarget(q.Range) && JungleQ && q.IsReady())
             {
+                
 
+               
                 switch (qmodus.Index)
                 {
                     case 0:
