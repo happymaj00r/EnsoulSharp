@@ -41,10 +41,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EnsoulSharp.SDK">
-      <HintPath>C:\Users\gamef\Desktop\EnsoulSharp\System\EnsoulSharp.SDK.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\EnsoulSharp.Dependencies-master (3)\EnsoulSharp.Dependencies-master\System\EnsoulSharp.SDK.dll</HintPath>
     </Reference>
     <Reference Include="EnsoulSharp.Wrapper">
-      <HintPath>C:\Users\gamef\Desktop\EnsoulSharp\System\EnsoulSharp.Wrapper.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\EnsoulSharp.Dependencies-master (3)\EnsoulSharp.Dependencies-master\Core\9.14\EnsoulSharp.Wrapper.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
       <HintPath>C:\Users\gamef\Desktop\EnsoulSharp\System\SharpDX.dll</HintPath>
