@@ -105,7 +105,7 @@ namespace Script_Maker.Champions
 
         public static void OnChange()
         {
-            q = new Spell(SpellSlot.Q, comboQRange.Value);
+            q = new Spell(SpellSlot.Q, q.Range);
             w = new Spell(SpellSlot.W, comboWRange.Value);
             e = new Spell(SpellSlot.E, comboERange.Value);
             r = new Spell(SpellSlot.R, comboRRange.Value);
@@ -115,17 +115,17 @@ namespace Script_Maker.Champions
                 case 0:
                     if(ColQ == true)
                     {
-                        q.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                        q.SetSkillshot(0.25f, 100, 1800, true, false, SkillshotType.Line);
                     }
                     else
-                    q.SetSkillshot(0.25f,100, 1800, false, SkillshotType.Line);
+                    q.SetSkillshot(0.25f,100, 1800, false, false, SkillshotType.Line);
                     break;
                 case 1:
 
                     q.SetTargetted(0.25f, float.MaxValue);
                     break;
                 default:
-                     q.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                     q.SetSkillshot(0.25f, 100, 1800, true, false, SkillshotType.Line);
                     break;
 
             }
@@ -134,16 +134,16 @@ namespace Script_Maker.Champions
                 case 0:
                     if (ColW == true)
                     {
-                        w.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                        w.SetSkillshot(0.25f, w.Instance.SData.LineWidth, w.Speed, true,false, SkillshotType.Line);
                     }
                     else
-                        w.SetSkillshot(0.25f, 100, 1800, false, SkillshotType.Line);
+                        w.SetSkillshot(0.25f, w.Instance.SData.LineWidth, w.Speed, false, false, SkillshotType.Line);
                     break;
                 case 1:
                     w.SetTargetted(0.25f, float.MaxValue);
                     break;
                 default:
-                    w.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    w.SetSkillshot(0.25f, 100, 1800, true, false, SkillshotType.Line);
                     break;
 
             }
@@ -152,16 +152,16 @@ namespace Script_Maker.Champions
                 case 0:
                     if (ColE == true)
                     {
-                        e.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                        e.SetSkillshot(0.25f, 100, 1800, true, false, SkillshotType.Line);
                     }
                     else
-                        e.SetSkillshot(0.25f, 100, 1800, false, SkillshotType.Line);
+                        e.SetSkillshot(0.25f, 100, 1800, false, false, SkillshotType.Line);
                     break;
                 case 1:
                     e.SetTargetted(0.25f, float.MaxValue);
                     break;
                 default:
-                    e.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    e.SetSkillshot(0.25f, 100, 1800, true, false, SkillshotType.Line);
                     break;
 
             }
@@ -170,16 +170,16 @@ namespace Script_Maker.Champions
                 case 0:
                     if (ColR == true)
                     {
-                        r.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                        r.SetSkillshot(0.25f, 100, 1800, true, false, SkillshotType.Line);
                     }
                     else
-                        r.SetSkillshot(0.25f, 100, 1800, false, SkillshotType.Line);
+                        r.SetSkillshot(0.25f, 100, 1800, false, false, SkillshotType.Line);
                     break;
                 case 1:
                     r.SetTargetted(0.25f, float.MaxValue);
                     break;
                 default:
-                    r.SetSkillshot(0.25f, 100, 1800, true, SkillshotType.Line);
+                    r.SetSkillshot(0.25f, 100, 1800, true, false, SkillshotType.Line);
                     
                     break;
 
