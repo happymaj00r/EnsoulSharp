@@ -105,7 +105,7 @@ namespace Script_Maker.Champions
 
         public static void OnChange()
         {
-            q = new Spell(SpellSlot.Q, q.Range);
+            q = new Spell(SpellSlot.Q, comboQRange.Value);
             w = new Spell(SpellSlot.W, comboWRange.Value);
             e = new Spell(SpellSlot.E, comboERange.Value);
             r = new Spell(SpellSlot.R, comboRRange.Value);
