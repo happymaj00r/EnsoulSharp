@@ -21,7 +21,7 @@ namespace Script_Maker
         {
            
                 ScriptMaker.OnLoad();
-                Chat.PrintChat("Welcome to Script Maker :)");
+                Chat.Print("Welcome to Script Maker :)");
             
         }
     }
