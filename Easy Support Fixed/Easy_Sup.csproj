@@ -67,7 +67,6 @@
     <Compile Include="Resources\KurisuLib.cs" />
     <Compile Include="scripts\Alistar.cs" />
     <Compile Include="scripts\Blitz.cs" />
-    <Compile Include="scripts\Karma.cs" />
     <Compile Include="scripts\Lux.cs" />
     <Compile Include="scripts\Morgana.cs" />
     <Compile Include="scripts\Pyke.cs" />
