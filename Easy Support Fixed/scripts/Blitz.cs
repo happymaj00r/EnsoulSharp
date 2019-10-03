@@ -26,7 +26,7 @@ namespace Easy_Sup.scripts
             if (Me.CharacterName != "Blitzcrank")
                 return;
 
-            _q = new Spell(SpellSlot.Q, 1050f);
+            _q = new Spell(SpellSlot.Q, 1150);
             _q.SetSkillshot(0.25f, 70f, 1800f, true, false,SkillshotType.Line);
 
             _e = new Spell(SpellSlot.E, 150f);
